@@ -4,9 +4,7 @@ A collection of useful Golang utility methods and libraries
 
 ---
 
-[![Build Status](https://travis-ci.org/marksost/go-utils.svg?branch=master)](https://travis-ci.org/marksost/go-utils)
-
-___
+[![GoDoc](https://godoc.org/github.com/marksost/go-utils?status.svg)](http://godoc.org/github.com/marksost/go-utils) [![Build Status](https://travis-ci.org/marksost/go-utils.svg?branch=master)](https://travis-ci.org/marksost/go-utils)
 
 ## Installation
 
@@ -24,13 +22,9 @@ import (
 )
 ```
 
----
-
-Documentation:
+## Documentation:
 
 https://godoc.org/github.com/marksost/go-utils
-
----
 
 ## Usage
 
