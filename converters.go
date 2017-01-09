@@ -1,4 +1,4 @@
-// converters are used to convert values from one type to another
+// A collection of useful Golang utility methods and libraries
 package goutils
 
 import (

@@ -1,4 +1,4 @@
-// slices defines various methods for manipulating/interacting with slices
+// A collection of useful Golang utility methods and libraries
 package goutils
 
 // SliceContains returns true if a slice of strings includes a specific string
