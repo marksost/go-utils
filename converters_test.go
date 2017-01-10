@@ -165,6 +165,33 @@ var _ = Describe("converters.go", func() {
 		})
 	})
 
+	Describe("`String2Bool` method", func() {
+		var (
+			// Input for `String2Bool` input
+			input map[string]bool
+		)
+
+		BeforeEach(func() {
+			// Set input
+			input = map[string]bool{
+				"foo":   false,
+				"false": false,
+				"true":  true,
+			}
+		})
+
+		It("Converts a string to a bool", func() {
+			// Loop through test data
+			for input, expected := range input {
+				// Call method
+				actual := String2Bool(input)
+
+				// Verify return value
+				Expect(actual).To(Equal(expected))
+			}
+		})
+	})
+
 	Describe("`String2Float64` method", func() {
 		var (
 			// Input for `String2Float64` input
