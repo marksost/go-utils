@@ -58,6 +58,22 @@ func MapFromInterface(i interface{}) map[string]interface{} {
 	return i.(map[string]interface{})
 }
 
+// String2Bool converts a string to a bool
+func String2Bool(v string) bool {
+	b, err := strconv.ParseBool(v)
+	if err != nil {
+		// Log conversion error
+		log.WithFields(log.Fields{
+			"string": v,
+			"error":  err.Error(),
+		}).Warn("Error converting string to bool")
+
+		return false
+	}
+
+	return b
+}
+
 // String2Float64 converts a string to a float64
 func String2Float64(v string) float64 {
 	f, err := strconv.ParseFloat(v, 64)
