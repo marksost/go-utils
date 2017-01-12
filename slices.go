@@ -1,3 +1,4 @@
+// Package goutils contains a collection of useful Golang utility methods and libraries
 package goutils
 
 // SliceContains returns true if a slice of strings includes a specific string
