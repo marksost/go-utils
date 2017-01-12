@@ -1,4 +1,3 @@
-// Package goutils contains a collection of useful Golang utility methods and libraries
 package goutils
 
 import (
