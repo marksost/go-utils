@@ -1,4 +1,4 @@
-// A collection of useful Golang utility methods and libraries
+// Package goutils contains a collection of useful Golang utility methods and libraries
 package goutils
 
 import (
@@ -9,10 +9,10 @@ import (
 )
 
 var (
-	// The host to run the Redis server on
+	// ServerHost is the host to run the Redis server on
 	// NOTE: Public variable to allow package authors the ability
 	// to change this before starting the Redis server
-	ServerHost string = "localhost"
+	ServerHost = "localhost"
 )
 
 // GetEmptyPort returns a number to be used as a new server's port
