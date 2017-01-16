@@ -3,7 +3,10 @@ package goutils
 
 import (
 	// Standard lib
+	"fmt"
 	"io/ioutil"
+	"net/http"
+	"net/http/httptest"
 	"testing"
 
 	// Third-party
@@ -19,6 +22,42 @@ type (
 		Haystack []string
 	}
 )
+
+// getMockServer returns a httptest server with the desired handler function
+// based on the key passed in
+func getMockServer(key string) *httptest.Server {
+	var handler http.Handler
+
+	switch key {
+	case "bad-request":
+		handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			// Write headers and body
+			w.WriteHeader(400)
+			w.Header().Set("Content-Type", "application/json")
+			fmt.Fprintln(w, `{"code":400}`)
+		})
+	case "invalid-json":
+		handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			// Write headers and body
+			w.Header().Set("Content-Type", "application/json")
+			// Invalid JSON (trailing comma)
+			fmt.Fprintln(w, `{"foo":"bar","test":1234,}`)
+		})
+	case "timeout":
+		handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			select {} // NOTE: Allows timeout error to occur within client.Do calls
+		})
+	default:
+		handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			// Write headers and body
+			w.WriteHeader(200)
+			w.Header().Set("Content-Type", "application/json")
+			fmt.Fprintln(w, `{}`)
+		})
+	}
+
+	return httptest.NewServer(handler)
+}
 
 // Tests the go-utils package
 func TestConfig(t *testing.T) {
