@@ -36,13 +36,6 @@ func getMockServer(key string) *httptest.Server {
 			w.Header().Set("Content-Type", "application/json")
 			fmt.Fprintln(w, `{"code":400}`)
 		})
-	case "invalid-json":
-		handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			// Write headers and body
-			w.Header().Set("Content-Type", "application/json")
-			// Invalid JSON (trailing comma)
-			fmt.Fprintln(w, `{"foo":"bar","test":1234,}`)
-		})
 	case "timeout":
 		handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			select {} // NOTE: Allows timeout error to occur within client.Do calls
