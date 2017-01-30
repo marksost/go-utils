@@ -22,7 +22,7 @@ var _ = Describe("net.go", func() {
 			Expect(c.Body).To(BeNil())
 			Expect(c.Client).To(BeNil())
 			Expect(c.Method).To(Equal("GET"))
-			Expect(c.Timeout).To(Equal(1))
+			Expect(c.Timeout).To(Equal(5))
 			Expect(c.URL).To(Equal(""))
 		})
 	})

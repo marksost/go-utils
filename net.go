@@ -37,7 +37,7 @@ func NewRequestConfig() *RequestConfig {
 		Body:    nil,
 		Client:  nil,
 		Method:  "GET",
-		Timeout: 1,
+		Timeout: 5,
 		URL:     "",
 	}
 }
