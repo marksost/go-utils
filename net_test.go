@@ -233,35 +233,6 @@ var _ = Describe("net.go", func() {
 			})
 		})
 
-		// Context("The server returned invalid data in the response", func() {
-		// 	BeforeEach(func() {
-		// 		// Create test server to mock responses
-		// 		server := helpers.getMockServer("invalid-json")
-
-		// 		// Set input
-		// 		input = &RequestConfig{
-		// 			Client: &http.Client{
-		// 				Transport: &http.Transport{
-		// 					Proxy: func(req *http.Request) (*url.URL, error) {
-		// 						return url.Parse(server.URL)
-		// 					},
-		// 				},
-		// 			},
-		// 			Method:   "GET",
-		// 			Response: &MockResponse{},
-		// 			URL:      server.URL,
-		// 		}
-		// 	})
-
-		// 	It("Returns an error", func() {
-		// 		// Call method
-		// 		err := MakeRequest(input)
-
-		// 		// Verify return value
-		// 		Expect(err).To(HaveOccurred())
-		// 	})
-		// })
-
 		Context("The server returned a valid response", func() {
 			BeforeEach(func() {
 				// Create test server to mock responses
