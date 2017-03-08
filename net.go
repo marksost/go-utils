@@ -15,11 +15,12 @@ type (
 	// RequestConfig contains a set of configuration settings
 	// to be used with the methods that make HTTP requests
 	RequestConfig struct {
-		Body    io.Reader
-		Client  *http.Client
-		Method  string
-		Timeout int
-		URL     string
+		Body        io.Reader    // The body of the request, if any
+		Client      *http.Client // An HTTP client to use, if needed
+		ContentType string       // The content type to send with the request
+		Method      string       // The HTTP method to use
+		Timeout     int          // A timeout, in seconds, for the request
+		URL         string       // The URL to make the request to
 	}
 )
 
@@ -34,11 +35,12 @@ var (
 // default settings set for each of it's properties
 func NewRequestConfig() *RequestConfig {
 	return &RequestConfig{
-		Body:    nil,
-		Client:  nil,
-		Method:  "GET",
-		Timeout: 5,
-		URL:     "",
+		Body:        nil,
+		Client:      nil,
+		ContentType: "application/json",
+		Method:      "GET",
+		Timeout:     5,
+		URL:         "",
 	}
 }
 
@@ -89,4 +91,31 @@ func GetStatusCodeForRequest(c *RequestConfig) (int, error) {
 	}
 
 	return res.StatusCode, nil
+}
+
+// MakeRequest attempts to make an HTTP request against a URL
+// with a given HTTP methor (ex: GET) and returns the response
+// as well as any errors that may have occured
+func MakeRequest(c *RequestConfig) (*http.Response, error) {
+	// Make new request
+	req, err := http.NewRequest(c.Method, c.URL, c.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	// Add content-type header if sending a body with the request
+	if c.Body != nil && c.ContentType != "" {
+		req.Header.Add("Content-Type", c.ContentType)
+	}
+
+	// Create client
+	// NOTE: Allow a client to be passed in (like during testing)
+	if c.Client == nil {
+		c.Client = &http.Client{
+			Timeout: time.Duration(c.Timeout) * time.Second,
+		}
+	}
+
+	// Send request and return the response
+	return c.Client.Do(req)
 }

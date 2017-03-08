@@ -3,6 +3,7 @@ package goutils
 
 import (
 	// Standard lib
+	"bytes"
 	"net/http"
 	"net/url"
 	"time"
@@ -153,6 +154,111 @@ var _ = Describe("net.go", func() {
 				// Verify return value
 				Expect(code).To(Equal(200))
 				Expect(err).To(Not(HaveOccurred()))
+			})
+		})
+	})
+
+	Describe("`MakeRequest` method", func() {
+		var (
+			// Input for `MakeRequest` input
+			input *RequestConfig
+		)
+
+		Context("An error occurred when forming the HTTP request", func() {
+			BeforeEach(func() {
+				// Set input
+				input = &RequestConfig{
+					Method: "GET",
+					URL:    ":",
+				}
+			})
+
+			It("Returns an error", func() {
+				// Call method
+				_, err := MakeRequest(input)
+
+				// Verify return value
+				Expect(err).To(HaveOccurred())
+			})
+		})
+
+		Context("An error occurred when forming the HTTP request via a non-mocked client", func() {
+			BeforeEach(func() {
+				// Set input
+				input = &RequestConfig{
+					Body:        bytes.NewBuffer([]byte("foo")), // Ensures header adding coverage
+					ContentType: "application/json",
+					Method:      "POST",
+					Timeout:     1,
+					URL:         getMockServer("timeout").URL, // Test server to ensure client error
+				}
+			})
+
+			It("Returns an error", func() {
+				// Call method
+				_, err := MakeRequest(input)
+
+				// Verify return value
+				Expect(err).To(HaveOccurred())
+			})
+		})
+
+		Context("An error occurred when forming the HTTP request via a mocked client", func() {
+			BeforeEach(func() {
+				// Create test server to mock responses
+				server := getMockServer("timeout")
+
+				// Set input
+				input = &RequestConfig{
+					Body: bytes.NewBuffer([]byte("foo")), // Ensures header adding coverage
+					Client: &http.Client{
+						Timeout: time.Duration(1) * time.Second,
+						Transport: &http.Transport{
+							Proxy: func(req *http.Request) (*url.URL, error) {
+								return url.Parse(server.URL)
+							},
+						},
+					},
+					Method: "PATCH",
+					URL:    server.URL,
+				}
+			})
+
+			It("Returns an error", func() {
+				// Call method
+				_, err := MakeRequest(input)
+
+				// Verify return value
+				Expect(err).To(HaveOccurred())
+			})
+		})
+
+		Context("The server returned a valid response", func() {
+			BeforeEach(func() {
+				// Create test server to mock responses
+				server := getMockServer("default")
+
+				// Set input
+				input = &RequestConfig{
+					Client: &http.Client{
+						Transport: &http.Transport{
+							Proxy: func(req *http.Request) (*url.URL, error) {
+								return url.Parse(server.URL)
+							},
+						},
+					},
+					Method: "GET",
+					URL:    server.URL,
+				}
+			})
+
+			It("Returns no error", func() {
+				// Call method
+				res, err := MakeRequest(input)
+
+				// Verify return value
+				Expect(err).To(Not(HaveOccurred()))
+				Expect(res.StatusCode).To(Equal(200))
 			})
 		})
 	})
