@@ -95,7 +95,7 @@ func GetStatusCodeForRequest(c *RequestConfig) (int, error) {
 
 // MakeRequest attempts to make an HTTP request against a URL
 // with a given HTTP methor (ex: GET) and returns the response
-// as well as any errors that may have occured
+// as well as any errors that may have occurred
 func MakeRequest(c *RequestConfig) (*http.Response, error) {
 	// Make new request
 	req, err := http.NewRequest(c.Method, c.URL, c.Body)
