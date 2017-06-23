@@ -6,7 +6,7 @@ import (
 	"strconv"
 
 	// Third-party
-	log "github.com/Sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 )
 
 // Bool2String converts a bool to a string
