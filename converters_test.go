@@ -61,6 +61,39 @@ var _ = Describe("converters.go", func() {
 		})
 	})
 
+	Describe("`IntSlice2StringSlice` method", func() {
+
+		var (
+			// Input for `IntSlice2StringSlice` input
+			input []*IntSlice2StringSliceTestData
+		)
+
+		BeforeEach(func() {
+			// Set input
+			input = []*IntSlice2StringSliceTestData{
+				&IntSlice2StringSliceTestData{
+					Input:  make([]int, 0),
+					Output: make([]string, 0),
+				},
+				&IntSlice2StringSliceTestData{
+					Input:  []int{1, 2},
+					Output: []string{"1", "2"},
+				},
+			}
+		})
+
+		It("Converts an int slice to a string slice", func() {
+			// Loop through test data
+			for _, input := range input {
+				// Call method
+				actual := IntSlice2StringSlice(input.Input)
+
+				// Verify return value
+				Expect(actual).To(Equal(input.Output))
+			}
+		})
+	})
+
 	Describe("`Int2String` method", func() {
 		var (
 			// Input for `Int2String` input

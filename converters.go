@@ -19,6 +19,27 @@ func Float642String(v float64) string {
 	return strconv.FormatFloat(v, 'f', -1, 64)
 }
 
+// IntSlice2StringSlice converts a slice of ints to a slice of strings
+func IntSlice2StringSlice(s []int) []string {
+	// Form return value
+	ret := make([]string, 0)
+
+	// Check for empty input
+	if len(s) == 0 {
+		return ret
+	}
+
+	// Loop through values
+	for _, i := range s {
+		// Only append non-empty strings
+		if v := Int2String(i); v != "" {
+			ret = append(ret, v)
+		}
+	}
+
+	return ret
+}
+
 // Int2String converts an int to a string
 func Int2String(v int) string {
 	return strconv.Itoa(v)

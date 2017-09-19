@@ -16,6 +16,11 @@ import (
 )
 
 type (
+	// Struct representing IntSlice2StringSlice input data
+	IntSlice2StringSliceTestData struct {
+		Input  []int
+		Output []string
+	}
 	// Struct representing SliceContains input data
 	SliceContainsTestData struct {
 		Needle   string
