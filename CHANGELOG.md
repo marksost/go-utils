@@ -1,5 +1,12 @@
 # Change Log
 
+## [0.2.0](https://github.com/marksost/go-utils/tree/0.2.0) (09-19-2017)
+[Full Changelog](https://github.com/marksost/go-utils/compare/0.1.0...0.2.0)
+
+**Merged pull requests:**
+
+- s/Sirupsen/sirupsen/ [\#8](https://github.com/marksost/go-utils/pull/8) ([marksost](https://github.com/marksost))
+
 ## [0.1.0](https://github.com/marksost/go-utils/tree/0.1.0) (03-24-2017)
 **Merged pull requests:**
 
